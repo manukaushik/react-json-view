@@ -35,6 +35,7 @@ class RjvObject extends React.PureComponent {
     }
 
     static getState = props => {
+        const srcName = props.src.name ? props.src.name : ""
         const size = Object.keys(props.src).length;
         const expanded =
             (props.collapsed === false ||
@@ -57,7 +58,8 @@ class RjvObject extends React.PureComponent {
             ),
             object_type: props.type === 'array' ? 'array' : 'object',
             parent_type: props.type === 'array' ? 'array' : 'object',
-            size
+            size,
+            srcName
         };
         return state;
     }
@@ -106,7 +108,7 @@ class RjvObject extends React.PureComponent {
     }
 
     getEllipsis = () => {
-        const { size } = this.state;
+        const { size, srcName } = this.state;
 
         if (size === 0) {
             //don't render an ellipsis when an object has no items
@@ -118,7 +120,7 @@ class RjvObject extends React.PureComponent {
                     class="node-ellipsis"
                     onClick={this.toggleCollapsed}
                 >
-                    ...
+                    <span>{srcName ? srcName : '...'}</span> 
                 </div>
             );
         }
